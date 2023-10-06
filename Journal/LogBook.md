@@ -36,3 +36,10 @@ Here are some questions I may answer:
 - How does the key signature affect the genre of a song?
 - What’s the correlation between the key signature and tempo, if there is one?
 - Is danceability and energy related and how?
+
+## 10/5/23
+I decided to make a program that will print a song title and the artist, so I can manually determine the genre and add it to the dictionary I have. The data in the dictionary will later be used in a neural network.
+
+The data I need will be added to the dictionary I mentioned, and that dictionary will be added to a list. The program will later iterate over the list.
+
+When I tried to test if the data was actually added to the list, I got an error saying that there wasn't enough memory to store all of the data, so I limited the number of songs to the first 100 songs.
