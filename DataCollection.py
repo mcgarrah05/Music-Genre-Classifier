@@ -22,11 +22,12 @@ Data Collection
 import os
 import datetime
 import glob
+import json
 
 import hdf5_getters as GETTERS
 
 #path to MSD subset
-subset_data_path = r"C:\Users\aubre\Desktop\Capstone\Music-Genre-Classifier\Data"
+subsetDataPath = r"C:\Users\aubre\Desktop\Capstone\Music-Genre-Classifier\Data"
 
 #time lag in seconds
 def strtimedelta(startTime, stopTime):
@@ -39,6 +40,8 @@ def apply_to_all_files(basedir, func = lambda x: x, ext = ".h5"):
     for root, dirs, files in os.walk(basedir):
         files = glob.glob(os.path.join(root, "*" + ext))
         count += len(files)
+        if count > 100:
+            break
 
         for f in files:
             func(f)
@@ -46,10 +49,10 @@ def apply_to_all_files(basedir, func = lambda x: x, ext = ".h5"):
     return count
 
 # #print number of song files (10000)
-# print("number of song files: " + str(apply_to_all_files(subset_data_path)))
+# print("number of song files: " + str(apply_to_all_files(subsetDataPath)))
 
 #gets data from song file
-def collect_data(songFile):
+def collect_data(songFile, dataList):
     song = GETTERS.open_h5_file_read(songFile)
 
     #song/artist information
@@ -87,3 +90,10 @@ def collect_data(songFile):
         "year": year,
         "genre": ""
     }
+
+    dataList.append(data)
+
+dataList = []
+apply_to_all_files(subsetDataPath, lambda currentSong: collect_data(currentSong, dataList))
+
+print(dataList)
